@@ -24,6 +24,15 @@ describe "CapistranoTags" do
     ENV['ASK_FOR_TAG'] = nil
   end
 
+  describe "capistrano instance validation" do
+
+    it "should validate presence of :repository_root variable" do
+      Capistrano::Configuration.stubs(:respond_to?).returns(false)
+      STDERR.stubs(:write) # avoid errors output for the labmda
+      lambda { load_gem_code }.should raise_error SystemExit, "capistrano-tags requires Capistrano 2"
+    end
+  end
+
   describe "svn behavior" do
 
     describe "variables validation" do
