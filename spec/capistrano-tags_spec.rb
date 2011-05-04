@@ -26,6 +26,16 @@ describe "CapistranoTags" do
 
   describe "svn behavior" do
 
+    describe "variables validation" do
+
+      it "should validate presence of :repository_root variable" do
+        @config.unset(:repository_root)
+        load_gem_code
+        STDERR.stubs(:write) # avoid errors output for the labmda
+        lambda { @config.fetch(:repository, false)}.should raise_error SystemExit, "You must set your :repository_root to use this recipe"
+      end
+    end
+
     before(:each) do
       @root = 'http://svn.example.org'
       @config.set(:scm, :subversion)
