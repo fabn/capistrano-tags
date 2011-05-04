@@ -1,5 +1,5 @@
 unless Capistrano::Configuration.respond_to?(:instance)
-  abort "capistrano/git/tags requires Capistrano 2"
+  abort "capistrano-tags requires Capistrano 2"
 end
 
 Capistrano::Configuration.instance.load do
@@ -16,11 +16,14 @@ Capistrano::Configuration.instance.load do
   if fetch(:scm) == :git
     # * set the :branch variable in your deploy.rb (normal workflow)
     # * set the GIT_TAG environment variable (it will override the branch variable)
-    set(:branch, ENV['GIT_TAG']) if ENV['GIT_TAG']
-    # * set the :ask_for_tag variable to true to be prompted for a tag
-    set(:branch) { Capistrano::CLI.ui.ask "Enter tag (or branch) to deploy:" } if fetch(:ask_for_tag, false)
-    # * set the ASK_FOR_TAG environment variable to be prompted for a tag
-    set(:branch) { Capistrano::CLI.ui.ask "Enter tag (or branch) to deploy:" } if ENV['ASK_FOR_TAG']
+    set(:branch, ENV['GIT_TAG']) if ENV['GIT_TAG'] and !ENV['GIT_TAG'].empty?
+    if ENV['ASK_FOR_TAG'] or fetch(:ask_for_tag, false)
+      # * set the :ask_for_tag or the ASK_FOR_TAG environment variable to true to be prompted for a tag
+      set(:branch) do
+        tag = Capistrano::CLI.ui.ask "Enter tag (or branch) to deploy:"
+        tag.empty? ? 'HEAD' : tag
+      end
+    end
   end
   # Subversion behavior
   if fetch(:scm) == :subversion
