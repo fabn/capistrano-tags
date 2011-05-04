@@ -52,9 +52,9 @@ In this case there's no need to set the `:repository_root` variable, because git
 variable. So you can deploy a branch or a tag by setting the `:repository` variable and then you can do
 one of the following
 
-1. Set the ENV variable `SVN_TAG` when invoking capistrano
+1. Set the ENV variable `GIT_TAG` when invoking capistrano
 
-        $ SVN_TAG=1.0 cap:deploy # this will deploy refs/tags/1.0
+        $ GIT_TAG=1.0 cap:deploy # this will deploy refs/tags/1.0
 
 2. Set the `:branch` variable to something i.e.
 
