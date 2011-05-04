@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "capistrano-tags"
   gem.homepage = "http://github.com/fabn/capistrano-tags"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Capistrano recipe to deploy svn and git tags}
+  gem.description = %Q{Use this recipe if you want to be able to deploy scm tags (or branches) with no need to edit your main deploy.rb file. You can choose the deployed tag using ENV variables or interactively decide which is the tag to deploy. }
   gem.email = "f.napoleoni@gmail.com"
   gem.authors = ["Fabio Napoleoni"]
   # dependencies defined in Gemfile
